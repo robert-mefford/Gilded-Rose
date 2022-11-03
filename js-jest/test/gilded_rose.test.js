@@ -40,3 +40,15 @@ describe("Aged Brie", function() {
     expect(items[0].sellIn).toBe(-1);
   })
 });
+
+describe("Sulfuras", function() {
+  it("`quality` and `sellIn` never change", function() {
+    const gildedRose = new Shop([new Item("Sulfuras", 0, 80)]);
+    let items = gildedRose.updateQuality();
+    expect(items[0].quality).toBe(80);
+    expect(items[0].sellIn).toBe(0);
+    items = gildedRose.updateQuality();
+    expect(items[0].quality).toBe(80);
+    expect(items[0].sellIn).toBe(0);
+  });
+});
