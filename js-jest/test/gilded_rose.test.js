@@ -52,3 +52,33 @@ describe("Sulfuras", function() {
     expect(items[0].sellIn).toBe(0);
   });
 });
+
+describe("Backstage passes", function() {
+  it("`quality` increase by 1 if `sellIn` is over 10", function() {
+    const gildedRose = new Shop([new Item("Backstage passes", 12, 10)]);
+    const items = gildedRose.updateQuality();
+    expect(items[0].quality).toBe(11);
+    expect(items[0].sellIn).toBe(11);
+  });
+
+  it("`quality` increase by 2 if `sellIn` is between 4 and 10", function() {
+    const gildedRose = new Shop([new Item("Backstage passes", 9, 10)]);
+    const items = gildedRose.updateQuality();
+    expect(items[0].quality).toBe(12);
+    expect(items[0].sellIn).toBe(8);
+  });
+
+  it("`quality` increase by 3 if `sellIn` is between 0 and 5", function() {
+    const gildedRose = new Shop([new Item("Backstage passes", 5, 10)]);
+    const items = gildedRose.updateQuality();
+    expect(items[0].quality).toBe(13);
+    expect(items[0].sellIn).toBe(4);
+  });
+
+  it("`quality` has to be 0 if `sellIn` is negative", function() {
+    const gildedRose = new Shop([new Item("Backstage passes", 0, 10)]);
+    const items = gildedRose.updateQuality();
+    expect(items[0].quality).toBe(0);
+    expect(items[0].sellIn).toBe(-1);
+  });
+});
