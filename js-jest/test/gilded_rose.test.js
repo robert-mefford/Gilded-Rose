@@ -1,7 +1,7 @@
 const {Shop, Item} = require("../src/gilded_rose");
 
 describe("Normal Items", function() {
-  it("`quality` can't be `negative`", function() {
+  it("`quality` can't be negative", function() {
     const gildedRose = new Shop([new Item("foo", 0, 0), new Item("foo", 2, 0)]);
     const items = gildedRose.updateQuality();
     expect(items[0].quality).toBe(0);
@@ -81,4 +81,30 @@ describe("Backstage passes", function() {
     expect(items[0].quality).toBe(0);
     expect(items[0].sellIn).toBe(-1);
   });
+});
+
+describe("Conjured Items", function() {
+  it("`quality` can't be negative", function() {
+    const gildedRose = new Shop([new Item("Conjured", 0, 0), new Item("Conjured", 2, 0)]);
+    const items = gildedRose.updateQuality();
+    expect(items[0].quality).toBe(0);
+    expect(items[1].quality).toBe(0);
+
+    expect(items[0].sellIn).toBe(-1);
+    expect(items[1].sellIn).toBe(1);
+  });
+
+  it("`quality` and `sellIn` decrease by 2", function() {
+    const gildedRose = new Shop([new Item("Conjured", 2, 10)]);
+    const items = gildedRose.updateQuality();
+    expect(items[0].quality).toBe(8);
+    expect(items[0].sellIn).toBe(1);
+  });
+
+  it("`quality` decrease by 4 when `sellIn` is negative", function() {
+    const gildedRose = new Shop([new Item("Conjured", 0, 10)]);
+    const items = gildedRose.updateQuality();
+    expect(items[0].quality).toBe(6);
+    expect(items[0].sellIn).toBe(-1);
+  })
 });
